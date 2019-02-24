@@ -1,2 +1,2 @@
-# account
-account service for BigCo, Inc.
+# activity
+activity service for BigCo, Inc.

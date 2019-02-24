@@ -44,13 +44,13 @@ var reqd = ['companyName','email','status'];
  ***************************************/
 // home
 router.get('/', function (req, res) {
-  res.send('{"home" : "{"name":"account", "rel" : "collection", href":"/account/list/"}}\n');
+  res.send('{"home" : "{"name":"activity", "rel" : "collection", href":"/activity/list/"}}\n');
 })
 
 // create
 router.post('/', function(req,res) {
   processPost(req,res).then(function(body) {
-    res.send('{"account" : ' + JSON.stringify(body,null,2) + '}\n');
+    res.send('{"actiity" : ' + JSON.stringify(body,null,2) + '}\n');
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -59,7 +59,7 @@ router.post('/', function(req,res) {
 // list
 router.get('/list/', function(req, res) {
   processList(req,res).then(function(body) {
-    res.send('{"account":' + JSON.stringify(body,null,2) + '}\n');
+    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -68,34 +68,34 @@ router.get('/list/', function(req, res) {
 // filter
 router.get('/filter/', function(req, res) {
   processFilter(req,res).then(function(body){
-    res.send('{"account":' + JSON.stringify(body,null,2) + '}\n');
+    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
 });
 
 // read
-router.get('/:accountId', function(req, res) {
+router.get('/:activityId', function(req, res) {
   processItem(req,res).then(function(body){
-    res.send('{"account":' + JSON.stringify(body,null,2) + '}\n');
+    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
 });
 
 // update
-router.put('/:accountId', function(req, res) {
+router.put('/:activityId', function(req, res) {
   processUpdate(req,res).then(function(body){
-    res.send('{"account":' + JSON.stringify(body,null,2) + '}\n');
+    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
 });
 
 // delete
-router.delete('/:accountId', function(req, res) {
+router.delete('/:activityId', function(req, res) {
   processDelete(req,res).then(function(body){
-    res.send('{"account":' + JSON.stringify(body,null,2) + '}\n');
+    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -111,7 +111,7 @@ function processPost(req,res) {
   return new Promise(function(resolve,reject) {
     if(req.body) {
      var body = req.body;
-     resolve(component({name:'account',action:'add',item:body,props:props,reqd:reqd}));
+     resolve(component({name:'activity',action:'add',item:body,props:props,reqd:reqd}));
     }
     else {
       reject({error:"invalid body"});
@@ -121,14 +121,14 @@ function processPost(req,res) {
 
 function processList(req,res) {
   return new Promise(function(resolve,reject) {
-    resolve(component({name:'account',action:'list'}));
+    resolve(component({name:'activity',action:'list'}));
   });
 }
 
 function processFilter(req,res) {
   return new Promise(function(resolve,reject){
     if(req.query && req.query.length!==0) {
-      resolve(component({name:'account',action:'filter',filter:req.query}));
+      resolve(component({name:'activity',action:'filter',filter:req.query}));
     }
     else {
       reject({error:"invalid query string"});
@@ -138,9 +138,9 @@ function processFilter(req,res) {
 
 function processItem(req,res) {
   return new Promise(function(resolve,reject){
-    if(req.params.accountId && req.params.accountId!==null) {
-      var id = req.params.companyId;
-      resolve(component({name:'account',action:'item',id:id}));
+    if(req.params.activityId && req.params.activityId!==null) {
+      var id = req.params.activityId;
+      resolve(component({name:'activity',action:'item',id:id}));
     } 
     else {
       reject({error:"missing id"});
@@ -151,11 +151,11 @@ function processItem(req,res) {
 function processUpdate(req,res) {
   var id,body;
   return new Promise(function(resolve,reject){
-    id = req.params.accountId||null;
+    id = req.params.activityId||null;
     body = req.body||null;
     if(id!==null && body!==null) {
        resolve(component(
-         {name:'account',
+         {name:'activity',
           action:'update',
           id:id,
           item:body,
@@ -170,9 +170,9 @@ function processUpdate(req,res) {
 
 function processDelete(req,res) {
   return new Promise(function(resolve,reject){
-    if(req.params.accountId && req.params.accountId!==null) {
-      var id = req.params.accountId;
-      resolve(component({name:'account',action:'delete', id:id}));
+    if(req.params.activityId && req.params.activityId!==null) {
+      var id = req.params.activityId;
+      resolve(component({name:'activity',action:'delete', id:id}));
     }
     else {
       reject({error:"invalid id"});
