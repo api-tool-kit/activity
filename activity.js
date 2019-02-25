@@ -21,23 +21,33 @@ router.use(function timeLog (req, res, next) {
   next()
 })
 
-// config customer object
-//var props = ['id','name','email','status','dateUpdated','dateCreated'];
+// config activity object
 var props = [
   'id',
-  'companyName',
-  'streetAddress',
-  'city',
-  'stateProvince',
-  'postalCode',
-  'country',
-  'telephone',
-  'email',
+  'activityType',
+  'companyId',
+  'accountId',
+  'dataScheduled',
+  'notes',
   'status',
   'dateCreated',
   'dateUpdated'
 ]
-var reqd = ['companyName','email','status'];
+var reqd = ['activityType','companyId','status'];
+
+/*
+status MUST be one of:
+- pending
+- active
+- suspended
+- closed
+
+activityType MUST be one of:
+- email
+- inperson
+- phone
+- letter
+*/
 
 /***************************************
  * handle request events
