@@ -60,7 +60,10 @@ router.get('/', function (req, res) {
 // create
 router.post('/', function(req,res) {
   processPost(req,res).then(function(body) {
-    res.send('{"actiity" : ' + JSON.stringify(body,null,2) + '}\n');
+    body = itemLinks(body);
+    body = {activity:body};
+    body = collectionLinks(body);
+    res.send(JSON.stringify(body,null,2));
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -69,7 +72,10 @@ router.post('/', function(req,res) {
 // list
 router.get('/list/', function(req, res) {
   processList(req,res).then(function(body) {
-    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
+    body = itemLinks(body);
+    body = {activity:body};
+    body = collectionLinks(body);
+    res.send(JSON.stringify(body,null,2));
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -78,7 +84,10 @@ router.get('/list/', function(req, res) {
 // filter
 router.get('/filter/', function(req, res) {
   processFilter(req,res).then(function(body){
-    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
+    body = itemLinks(body);
+    body = {activity:body};
+    body = collectionLinks(body);
+    res.send(JSON.stringify(body,null,2));
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -87,7 +96,10 @@ router.get('/filter/', function(req, res) {
 // read
 router.get('/:activityId', function(req, res) {
   processItem(req,res).then(function(body){
-    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
+    body = itemLinks(body);
+    body = {activity:body};
+    body = collectionLinks(body);
+    res.send(JSON.stringify(body,null,2));
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -96,7 +108,10 @@ router.get('/:activityId', function(req, res) {
 // update
 router.put('/:activityId', function(req, res) {
   processUpdate(req,res).then(function(body){
-    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
+    body = itemLinks(body);
+    body = {activity:body};
+    body = collectionLinks(body);
+    res.send(JSON.stringify(body,null,2));
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
@@ -105,13 +120,38 @@ router.put('/:activityId', function(req, res) {
 // delete
 router.delete('/:activityId', function(req, res) {
   processDelete(req,res).then(function(body){
-    res.send('{"activity":' + JSON.stringify(body,null,2) + '}\n');
+    body = itemLinks(body);
+    body = {activity:body};
+    body = collectionLinks(body);
+    res.send(JSON.stringify(body,null,2));
   }).catch(function(err) {
     res.send('{"error" : ' + JSON.stringify(err,null,2) + '}\n');
   });
 });
 
 module.exports = router
+
+
+// handle links for each item
+function itemLinks(list) {
+  list.forEach(item => {
+    item.links = [];
+    item.links[0] = {rel:"read",href:"/activity/" + item.id};
+    item.links[1] = {rel:"update",href:"/activity/" + item.id};
+    item.links[2] = {rel:"delete",href:"/activity/" + item.id};
+});
+  return list;
+}
+
+// handle collection links
+function collectionLinks(list) {
+    list.links = [];
+    list.links[0] = {rel:"list",href:"/activity/list"};
+    list.links[1] = {rel:"add",href:"/activity/list"};
+    list.links[2] = {rel:"home",href:"/compactivityany/"};
+    console.log(list);
+  return list;
+}
 
 /****************************************
  * handle processing of request/responses
