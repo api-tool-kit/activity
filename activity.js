@@ -137,9 +137,29 @@ function itemLinks(list) {
   list.forEach(item => {
     item.links = [];
     item.links[0] = {rel:"read",href:"/activity/" + item.id};
-    item.links[1] = {rel:"update",href:"/activity/" + item.id};
-    item.links[2] = {rel:"delete",href:"/activity/" + item.id};
-});
+    item.links[1] = {
+      rel:"update",href:"/activity/" + item.id,
+      form: {
+        method:"put",
+        contentType:"application/x-www-form-urlencoded",
+        properties:[
+          {name:"activityId",value:item.id||""},
+          {name:"actiityType",value:item.activityType||""},
+          {name:"accountId",value:item.accountId||""},
+          {name:"companyId",value:item.companyId||""},
+          {name:"dateScheduled",value:item.dateScheduled||""},
+          {name:"notes",value:item.notes||""},
+          {name:"status",value:item.status||""}
+        ]
+      }
+    };
+    item.links[2] = {rel:"delete",href:"/activity/" + item.id,
+      form: {
+        method:"delete",
+        properties:[]
+      }
+    };
+  });
   return list;
 }
 
@@ -147,8 +167,32 @@ function itemLinks(list) {
 function collectionLinks(list) {
     list.links = [];
     list.links[0] = {rel:"list",href:"/activity/list"};
-    list.links[1] = {rel:"add",href:"/activity/list"};
-    list.links[2] = {rel:"home",href:"/compactivityany/"};
+    list.links[1] = {rel:"filter",href:"/activity/filter",
+      form: {
+        method:"get",
+        contentType:"application/x-www-form-urlencoded",
+        properties:[
+          {name:"actiityType",value:""},
+          {name:"dateScheduled",value:""},
+          {name:"status",value:""}
+        ]
+      }
+    };
+    list.links[2] = {rel:"add",href:"/activity/list",
+      form: {
+        method:"post",
+        contentType:"application/x-www-form-urlencoded",
+        properties: [
+          {name:"actiityType",value:"email"},
+          {name:"accountId",value:""},
+          {name:"companyId",value:""},
+          {name:"dateScheduled",value:""},
+          {name:"notes",value:""},
+          {name:"status",value:"pending"}
+        ]
+      }
+    };
+    list.links[3] = {rel:"home",href:"/activity/"};
     console.log(list);
   return list;
 }
