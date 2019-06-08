@@ -1,7 +1,7 @@
 Activity Workflow
 =================
 
-home -> listActivities -> createActitity
-home -> listActivities -> filterActivities -> readActivity
+home -> listActivities -> createActivity
 home -> listActivities -> readActivity -> updateActivity OR closeActivity
+home -> listActivities -> filterActivities -> readActivity -> updateActivity OR closeActivity
 
