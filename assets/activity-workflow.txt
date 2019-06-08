@@ -1,0 +1,7 @@
+Activity Workflow
+=================
+
+home -> listActivities -> createActitity
+home -> listActivities -> filterActivities -> readActivity
+home -> listActivities -> readActivity -> updateActivity OR closeActivity
+
