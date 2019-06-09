@@ -10,7 +10,7 @@
 * notes
 * status (r)(e)
 * dateCreated
-* dateUpdated
+* dateUpdated 
 
 Valid _activityType_ values are:
 - email

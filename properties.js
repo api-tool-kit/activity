@@ -48,8 +48,22 @@ exports.itemLinks = [
 exports.pageForms = [
   {name:"home", href:"/", method:"get", properties:[]},
   {name:"collection", href: "/list/", method:"get", properties:[]},
-  {name:"search", href:"/filter/", method:"get", properties:[]},
-  {name:"create", href:"/", method:"post", properties:[]}
+  {name:"search", href:"/filter/", method:"get", 
+    properties:[
+      {name:"activityType", value:"email"},
+      {name:"companyId", value:""},
+      {name:"accountId", value:""},
+      {name:"status", value:"pending"}
+  ]},
+  {name:"create", href:"/", method:"post", 
+    properties:[
+      {name:"activityType", value:"email"},
+      {name:"companyId", value:""},
+      {name:"accountId", value:""},
+      {name:"dateScheduled", value:""},
+      {name:"notes", value:""},
+      {name:"status", value:"pending"}
+  ]}
 ];
 
 
@@ -146,7 +160,7 @@ exports.templates = [
                 {
                   <%var w=0;%>
                   <%for(var p in form){%>
-                    <%if(w!==0){%>,<%}%>"<%=p%>" : <%if(Array.isArray(form[p])){%>[]<%}else{%>"<%=form[p]%>"<%}%>
+                    <%if(w!==0){%>,<%}%>"<%=p%>" : <%if(Array.isArray(form[p])){%><%-JSON.stringify(form[p])%><%}else{%>"<%=form[p]%>"<%}%>
                     <%w=1;%>
                   <%}%>  
                 }

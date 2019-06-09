@@ -50,7 +50,7 @@ router.post('/', function(req,res){
 });
 
 router.get('/list/',function(req,res){
-  utils.handler(req,res,actions.list, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.list, object, templates, {pageLinks:pLinks, pageForms:pForms, itemForms:iForms})
 });
 
 router.get('/filter/', function(req,res){
