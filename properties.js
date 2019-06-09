@@ -31,17 +31,27 @@ exports.responseTypes = [
 exports.urlencoded = true;
 exports.allowCORS = "GET POST PUT DELETE PATCH OPTIONS HEAD";
 
-exports.links = [
+exports.pageLinks = [
  {name:"home", href:"/"},
  {name:"collection", href:"/list/"},
- {name:"search", href:"/filter/"}
+ {name:"search", href:"/filter/"},
+ {name:"create", href:"/"}
+];
+
+exports.itemLinks = [
+  {"name" : "item", "href" : "/<%=item[p]%>"},
+  {"name" : "edit", "href" : "/<%=item[p]%>"},
+  {"name" : "status", "href" : "/<%=item[p]%>"},
+  {"name" : "close", "href" : "/<%=item[p]%>"}
 ];
 
 exports.pageForms = [
   {name:"home", href:"/", method:"get", properties:[]},
   {name:"collection", href: "/list/", method:"get", properties:[]},
-  {name:"search", href:"/filter/", method:"get", properties:[]}
+  {name:"search", href:"/filter/", method:"get", properties:[]},
+  {name:"create", href:"/", method:"post", properties:[]}
 ];
+
 
 // ****************************************
 // DORR REPRESENTATION
@@ -82,7 +92,7 @@ exports.templates = [
             "links" : 
             [
               <%var z=0;%>
-              <%links.forEach(function(link){%>
+              <%pLinks.forEach(function(link){%>
                 <%if(z!==0){%>,<%}%>
                 {
                   <%var w=0;%>
@@ -153,10 +163,10 @@ exports.templates = [
                   <%for(var p in item){%>
                     <%if(p==="id"){%>
                     "forms" : [
-                      {"name" : "item", "href" : "/<%=item[p]%>"},
-                      {"name" : "edit", "href" : "/<%=item[p]%>"},
-                      {"name" : "status", "href" : "/<%=item[p]%>"},
-                      {"name" : "close", "href" : "/<%=item[p]%>"}
+                      {"name" : "item", "href" : "/<%=item[p]%>", "method":"get","properties":[]},
+                      {"name" : "edit", "href" : "/<%=item[p]%>", "method":"put","properties":[]},
+                      {"name" : "status", "href" : "/<%=item[p]%>", "method":"patch","properties":[]},
+                      {"name" : "close", "href" : "/<%=item[p]%>", "method":"post","properties":[]}
                     ]
                     <%y=1;%><%}%>
                     <%if(y!==0){%>,<%}%>"<%=p%>" : "<%=item[p]%>"
