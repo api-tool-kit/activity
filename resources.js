@@ -18,6 +18,9 @@ router.use(bodyParser.urlencoded({extended:properties.urlencoded}));
 
 //set up response body templates
 var templates = properties.templates;
+var links = properties.links||[];
+var pForms = properties.pageForms||[];
+
 var object = "activity";
 
 // tracking middleware
@@ -36,35 +39,35 @@ router.use(function emitCORS (req, res, next) {
 
 // the actions/capabilities of this service API
 router.get('/',function(req,res){
-  utils.handler(req,res,actions.home,"home", templates)
+  utils.handler(req,res,actions.home,object, templates, links, pForms)
 });
 
 router.post('/', function(req,res){
-  utils.handler(req,res,actions.create,object, templates)
+  utils.handler(req,res,actions.create, object, templates, links)
 });
 
 router.get('/list/',function(req,res){
-  utils.handler(req,res,actions.list,object, templates)
+  utils.handler(req,res,actions.list, object, templates, links, pForms)
 });
 
 router.get('/filter/', function(req,res){
-  utils.handler(req,res,actions.filter,object, templates)
+  utils.handler(req,res,actions.filter, object, templates, links)
 });
 
 router.get('/:activityId', function(req,res){
-  utils.handler(req,res,actions.read,object, templates)
+  utils.handler(req,res,actions.read, object, templates, links)
 });
 
 router.put('/:activityId', function(req,res){
-  utils.handler(req,res,actions.update,object, templates)
+  utils.handler(req,res,actions.update, object, templates, links)
 });
 
 router.patch('/status/:activityId', function(req,res){
-  utils.handler(req,res,actions.status,object, templates)
+  utils.handler(req,res,actions.status, object, templates, links)
 });
 
 router.post('/close/:activityId', function(req,res){
-  utils.handler(req,res,actions.close,object, templates)
+  utils.handler(req,res,actions.close, object, templates, links)
 });
 
 // publish the capability routes

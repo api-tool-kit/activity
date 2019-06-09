@@ -12,11 +12,7 @@ var properties = require('./properties');
 
  module.exports.home = function(req,res) {
   return new Promise(function(resolve,reject) {
-    var body = [{
-      name:"activity",
-      rel:"collection",
-      href:"http://" + req.headers.host + "/list/"
-    }];
+    var body = [];
     if(body) {
       resolve(body);
     }
