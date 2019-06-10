@@ -220,16 +220,18 @@ function exception(name, message, code, type, url) {
 // ejs-dependent response emitter
 // handle formatting response
 // depends on ejs templating
-exports.handler = function(req, res, fn, type, templates, actions){
+//exports.handler = function(req, res, fn, type, templates, actions){
+exports.handler = function(req, res, fn, type, representor){
   var rtn = {};
   var xr = [];
   var oType = type||"collection";
-  var template = resolveAccepts(req, templates);
-  var linksForms = actions||{}  
-  var pLinks = linksForms.pageLinks||[];
-  var iLinks = linksForms.itemLinks||[];
-  var pForms = linksForms.pageForms||[];
-  var iForms = linksForms.itemForms||[];
+  var represent = representor||{};
+  var template = resolveAccepts(req, represent.templates);
+  //var linksForms = actions||{}  
+  var pLinks = represent.pageLinks||[];
+  var iLinks = represent.itemLinks||[];
+  var pForms = represent.pageForms||[];
+  var iForms = represent.itemForms||[];
   
   fn(req,res).then(function(body) {
     if(jsUtil.isArray(body)===true) {
