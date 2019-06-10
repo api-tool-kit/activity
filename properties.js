@@ -50,10 +50,10 @@ exports.pageForms = [
   {name:"collection", href: "/list/", method:"get", properties:[]},
   {name:"search", href:"/filter/", method:"get", 
     properties:[
-      {name:"activityType", value:"email"},
+      {name:"activityType", value:""},
       {name:"companyId", value:""},
       {name:"accountId", value:""},
-      {name:"status", value:"pending"}
+      {name:"status", value:""}
   ]},
   {name:"create", href:"/", method:"post", 
     properties:[
@@ -160,7 +160,21 @@ exports.templates = [
                 {
                   <%var w=0;%>
                   <%for(var p in form){%>
-                    <%if(w!==0){%>,<%}%>"<%=p%>" : <%if(Array.isArray(form[p])){%><%-JSON.stringify(form[p])%><%}else{%>"<%=form[p]%>"<%}%>
+                    <%if(w!==0){%>,<%}%>"<%=p%>" : <%if(Array.isArray(form[p])){%>
+	              [
+	              <%var a=0;%>
+		      <%form[p].forEach(function(prop){%>
+	                <%if(a!==0){%>,<%}%>
+			{
+			  <%var b=0;%>
+			  <%for(var pr in prop){%>
+			    <%if(b!==0){%>,<%}%>"<%=pr%>" : "<%=prop[pr]%>"
+			    <%b=1;%>
+			  <%}%>
+			}
+		      <%});%>
+		      ]	      
+	            <%}else{%>"<%=form[p]%>"<%}%>
                     <%w=1;%>
                   <%}%>  
                 }
