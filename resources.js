@@ -24,6 +24,12 @@ var iLinks = properties.itemLinks||[];
 var pForms = properties.pageForms||[];
 var iForms = properties.itemForms||[];
 
+var representor = {};
+representor.templates = templates||[];
+representor.pageLinks = properties.pageLinks||[];
+representor.itemLinks = properties.itemLinks||[];
+representor.pageForms = properties.pageForms||[];
+representor.itemForms = properties.itemForms||[];
 var object = "activity";
 
 // tracking middleware
@@ -42,35 +48,35 @@ router.use(function emitCORS (req, res, next) {
 
 // the actions/capabilities of this service API
 router.get('/',function(req,res){
-  utils.handler(req,res,actions.home, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.home, object, representor) 
 });
 
 router.post('/', function(req,res){
-  utils.handler(req,res,actions.create, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.create, object, representor)
 });
 
 router.get('/list/',function(req,res){
-  utils.handler(req,res,actions.list, object, templates, {pageLinks:pLinks, pageForms:pForms, itemForms:iForms})
+  utils.handler(req,res,actions.list, object, representor)
 });
 
 router.get('/filter/', function(req,res){
-  utils.handler(req,res,actions.filter, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.filter, object, representor)
 });
 
 router.get('/:activityId', function(req,res){
-  utils.handler(req,res,actions.read, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.read, object, representor)
 });
 
 router.put('/:activityId', function(req,res){
-  utils.handler(req,res,actions.update, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.update, object, representor)
 });
 
 router.patch('/status/:activityId', function(req,res){
-  utils.handler(req,res,actions.status, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.status, object, representor)
 });
 
 router.post('/close/:activityId', function(req,res){
-  utils.handler(req,res,actions.close, object, templates, {pageLinks:pLinks, pageForms:pForms})
+  utils.handler(req,res,actions.close, object, representor)
 });
 
 // publish the capability routes
