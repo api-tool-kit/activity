@@ -66,6 +66,26 @@ exports.pageForms = [
   ]}
 ];
 
+exports.itemForms = [
+  {name:"item", href:"/<%-item.id%>", method:"get", properties:[]},
+  {name:"edit", href:"/<%-item.id%>", method:"put",
+    properties:[
+      {name:"activityType", value:""},
+      {name:"companyId", value:""},
+      {name:"accountId", value:""},
+      {name:"dateScheduled", value:""},
+      {name:"notes", value:""},
+      {name:"status", value:"pending"}
+  ]},
+  {name:"status", href:"/<%=item[p]%>", method:"patch", properties:[
+      {name:"status", value:""}
+  ]},
+  {name:"close", href:"/<%=item[p]%>", method:"post", properties:[
+      {name:"notes", value:""},
+      {name:"status", value:"pending"}
+  ]}
+];
+
 
 // ****************************************
 // DORR REPRESENTATION
@@ -173,6 +193,20 @@ exports.templates = [
               <%rtn.forEach(function(item){%>
                 <%if(x!==0){%>,<%}%>
                 {
+
+                  <%var q=0;%>
+                  <%iForms.forEach(function(form){%>
+                    <%if(q!==0){%>,<%}%>
+                    {
+                      <%var r=0;%>
+                      <%for(var p in form){%>
+                        <%if(r!==0){%>,<%}%>"<%=p%>" : <%if(Array.isArray(form[p])){%><%-JSON.stringify(form[p])%><%}else{%>"<%=form[p]%>"<%}%>
+                        <%r=1;%>
+                      <%}%>  
+                    }
+                    <%q=1;%>
+                  <%});%>
+                
                   <%var y=0;%>
                   <%for(var p in item){%>
                     <%if(p==="id"){%>
