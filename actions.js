@@ -19,7 +19,7 @@ module.exports.home = function(req,res) {
     
     // hack to handle empty root for non-link types
     ctype = req.get("Accept")||"";
-    if("application/json text-csv".indexOf(ctype)!==-1) {
+    if("application/json text/csv */*".indexOf(ctype)!==-1) {
       body = {
         id:"list",
         name:"activity",
@@ -142,7 +142,7 @@ module.exports.close = function(req,res) {
          {name:'activity',
           action:'update',
           id:id,
-          item:{"status=closed"},
+          item:{"status":"closed"},
           props:data.props,
           reqd:data.data,
           enums:data.enums}));

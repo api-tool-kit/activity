@@ -1,5 +1,5 @@
 /*****************************************
-// bigco, inc company
+// bigco, inc activity
 // root of the service API
 // 2020-02-01 : mamund
  *****************************************/
@@ -9,7 +9,7 @@ var app = express();
 var cors = require('cors');
 
 var resources = require('./resources');
-var port = process.env.PORT || 8282;
+var port = process.env.PORT || 8686;
 
 // support calls from JS in browser
 app.use(cors());
