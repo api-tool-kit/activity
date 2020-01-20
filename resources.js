@@ -1,85 +1,158 @@
 /*****************************************
- * acitivty service for BigCo, Inc.
- * 2019-01 mamund
+// bigco, inc
+// activity resources 
+// 2020-02-01 : mamund
  *****************************************/
 
+/*******************************************
+// initialization and setup for DARRT
+********************************************/
 var express = require('express')
 var router = express.Router()
 var bodyParser = require('body-parser');
 
 var actions = require('./actions');
-var properties = require('./properties');
-var utils = require('./dorr-utils');
+var representation = require('./representation');
+var transitions = require('./transitions');
+var utils = require('./darrt/utils');
 
+// set up request body parsing & response templates
+router.use(bodyParser.json({type:representation.getResponseTypes()}));
+router.use(bodyParser.urlencoded({extended:representation.urlencoded}));
 
-// set up request body parsing
-router.use(bodyParser.json({type:properties.responseTypes}));
-router.use(bodyParser.urlencoded({extended:properties.urlencoded}));
+// load response templates and input forms
+var templates = representation.getTemplates();
+var forms = transitions.forms;
 
-//set up response body templates
-var templates = properties.templates;
-var pLinks = properties.pageLinks||[];
-var iLinks = properties.itemLinks||[];
-
-var pForms = properties.pageForms||[];
-var iForms = properties.itemForms||[];
-
-var representor = {};
-representor.templates = templates||[];
-representor.pageLinks = properties.pageLinks||[];
-representor.itemLinks = properties.itemLinks||[];
-representor.pageForms = properties.pageForms||[];
-representor.itemForms = properties.itemForms||[];
-var object = "activity";
-
-// tracking middleware
+// optional tracking middleware
 router.use(function timeLog (req, res, next) {
   console.log('Time: ', Date.now() + " : " + req.headers.host + req.url)
   next()
 })
 
-// output headers
-router.use(function emitCORS (req, res, next) {
-  if(properties.allowCORS && properties.allowCORS !== "") {
-    res.set("Access-Control-Allow-Methods", properties.allowCORS);
-  }  
-  next()
-})
+/************************************************************************/
 
-// the actions/capabilities of this service API
+// shared metadata for this service
+var metadata = [
+  {name: "title", value: "BigCo Activity Records"},
+  {name: "author", value: "Mike Amundsen"},
+  {name: "release", value: "1.0.0"} 
+];
+
+
+// ***********************************************************
+// public resources for the cokmpany service
+// ***********************************************************
+
+// home resource
 router.get('/',function(req,res){
-  utils.handler(req,res,actions.home, object, representor) 
+  utils.handler(req,res,actions.home,"home", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms,
+      filter:"home"
+    }
+  )
 });
 
+// createAccount
 router.post('/', function(req,res){
-  utils.handler(req,res,actions.create, object, representor)
+  utils.handler(req,res,actions.create,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms,
+      filter:"home"
+    }
+  )
 });
 
+// list accounts
 router.get('/list/',function(req,res){
-  utils.handler(req,res,actions.list, object, representor)
+  utils.handler(req,res,actions.list,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms,
+      filter:"list"
+    }
+  )
 });
 
+// filter accounts
 router.get('/filter/', function(req,res){
-  utils.handler(req,res,actions.filter, object, representor)
+  utils.handler(req,res,actions.filter,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms, 
+      filter:"list"
+    }
+  )
 });
 
+// read account
 router.get('/:activityId', function(req,res){
-  utils.handler(req,res,actions.read, object, representor)
+  utils.handler(req,res,actions.read,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms, 
+      filter:"item"
+    }
+  )
 });
 
+// update account
 router.put('/:activityId', function(req,res){
-  utils.handler(req,res,actions.update, object, representor)
+  utils.handler(req,res,actions.update,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms, 
+      filter:"item"
+    }
+  )
 });
 
+// modify status of account
 router.patch('/status/:activityId', function(req,res){
-  utils.handler(req,res,actions.status, object, representor)
+  utils.handler(req,res,actions.status,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms, 
+      filter:"item"
+    }
+  )
 });
 
-router.post('/close/:activityId', function(req,res){
-  utils.handler(req,res,actions.close, object, representor)
+// modify limits of account
+router.patch('/close/:accountId', function(req,res){
+  utils.handler(req,res,actions.close,"activity", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms, 
+      filter:"item"
+    }
+  )
 });
+
+// remove account
+/*
+router.delete('/:accountId', function(req,res){
+  utils.handler(req,res,actions.remove,"account", 
+    {
+      metadata:metadata,
+      templates:templates,
+      forms:forms, 
+      filter:"item"
+    }
+  )
+});
+*/
 
 // publish the capability routes
 module.exports = router
-
-
