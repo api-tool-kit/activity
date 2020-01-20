@@ -1,33 +1,18 @@
 /*****************************************
-// bigco, inc 
-// activity action elements
-// 2020-02-01 : mamund
+ * activity capabilities for BigCo, Inc.
+ * 2019-01 mamund
  *****************************************/
 
-var component = require('./darrt/component');
-var data = require('./data');
+var component = require('./dorr-component');
+var properties = require('./properties');
 
-/***************************************** 
-// actions for the activity service
-// home, create, list, filter, 
-// read, update, status, close
+/*****************************************
+ * action handles for company service
  *****************************************/
 
-module.exports.home = function(req,res) {
+ module.exports.home = function(req,res) {
   return new Promise(function(resolve,reject) {
-    var body = []; 
-    
-    // hack to handle empty root for non-link types
-    ctype = req.get("Accept")||"";
-    if("application/json text/csv */*".indexOf(ctype)!==-1) {
-      body = {
-        id:"list",
-        name:"activity",
-        rel:"collection activity",
-        href: "{fullhost}/list/"
-      };
-    }
-    
+    var body = [];
     if(body) {
       resolve(body);
     }
@@ -47,10 +32,9 @@ module.exports.create = function(req,res) {
           name:'activity',
           action:'add',
           item:body,
-          props:data.props,
-          reqd:data.reqd, 
-          enums:data.enums,
-          defs:data.defs
+          props:properties.props,
+          reqd:properties.reqd, 
+          enums:properties.enums
         }
        )
      );
@@ -81,7 +65,7 @@ module.exports.filter = function(req,res) {
 module.exports.read = function(req,res) {
   return new Promise(function(resolve,reject){
     if(req.params.activityId && req.params.activityId!==null) {
-      var id = req.params.accountId;
+      var id = req.params.activityId;
       resolve(component({name:'activity',action:'item',id:id}));
     } 
     else {
@@ -101,9 +85,9 @@ module.exports.update = function(req,res) {
           action:'update',
           id:id,
           item:body,
-          props:data.props,
-          reqd:data.reqd,
-          enums:data.enums}));
+          props:properties.props,
+          reqd:properties.reqd,
+          enums:properties.enums}));
      }
      else {
        reject({error:"missing id and/or body"});
@@ -122,9 +106,9 @@ module.exports.status = function(req,res) {
           action:'update',
           id:id,
           item:body,
-          props:data.props,
-          reqd:data.data,
-          enums:data.enums}));
+          props:properties.props,
+          reqd:properties.reqd,
+          enums:properties.enums}));
      }
      else {
        reject({error:"missing id and/or body"});
@@ -142,29 +126,14 @@ module.exports.close = function(req,res) {
          {name:'activity',
           action:'update',
           id:id,
-          item:{"status":"closed"},
-          props:data.props,
-          reqd:data.data,
-          enums:data.enums}));
+          item:body,
+          props:properties.props,
+          reqd:properties.reqd,
+          enums:properties.enums}));
      }
      else {
        reject({error:"missing id and/or body"});
      }
   });
 }
-
-/*
-module.exports.remove = function(req,res) {
-  return new Promise(function(resolve,reject){
-    if(req.params.activityId && req.params.activityId!==null) {
-      var id = req.params.activity;
-      resolve(component(
-        {name:'activity',action:'delete', id:id}));
-    }
-    else {
-      reject({error:"invalid id"});
-    }
-  });
-}
-*/
 
