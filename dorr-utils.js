@@ -232,6 +232,7 @@ exports.handler = function(req, res, fn, type, representor){
   var iLinks = represent.itemLinks||[];
   var pForms = represent.pageForms||[];
   var iForms = represent.itemForms||[];
+  var metadata = represent.metadata||[];
   
   fn(req,res).then(function(body) {
     if(jsUtil.isArray(body)===true) {
@@ -270,7 +271,8 @@ exports.handler = function(req, res, fn, type, representor){
     }
 
     var reply = "";
-    rtn = {rtn:rtn,pLinks:pLinks,iLinks:iLinks,pForms:pForms,iForms:iForms,type:oType};
+    rtn = {rtn:rtn,pLinks:pLinks,iLinks:iLinks,pForms:pForms,iForms:iForms,type:oType,metadata:metadata};
+    console.log(rtn);
     if(template.view!=="") {
       reply= ejs.render(template.view,rtn);
     }
