@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "activity",
   "version": "1.0.0",
   "description": "Activity service for BigCo, Inc.",
@@ -17,44 +16,18 @@
     "mamund",
     "apitoolkit",
     "bigco",
-=======
-  "name": "account",
-  "version": "1.0.0",
-  "description": "account service for BigCo, Inc.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/api-tool-kit/account.git"
-  },
-  "keywords": [
-    "bigco",
-    "dabga",
-    "apitoolkit",
-    "mamund",
     "account",
->>>>>>> 8a57f003db37321d4aef320b5710f207c938148c
     "pragprog"
   ],
   "author": "Mike Amundsen (@mamund)",
   "license": "ISC",
   "bugs": {
-<<<<<<< HEAD
     "url": "https://github.com/api-tool-kit/activity/issues"
   },
   "homepage": "https://github.com/api-tool-kit/activity#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
-=======
-    "url": "https://github.com/api-tool-kit/account/issues"
-  },
-  "homepage": "https://github.com/api-tool-kit/account#readme",
-  "dependencies": {
->>>>>>> 8a57f003db37321d4aef320b5710f207c938148c
     "ejs": "^2.6.1",
     "express": "^4.16.4"
   }
