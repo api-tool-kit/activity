@@ -1,5 +1,22 @@
 ## Activity API Vocabulary
 
+### Actions
+
+ * createActivity
+   * activityType(r), companyId(r)(e), accountId, status(r)(e), notes, dateScheduled
+ * updateActivity
+   * id, activityType(r)(e), companyId(r), accountId, status(r)(e), notes, dateScheduled
+ * closeActivity
+   * id, notes 
+ * statusActivity
+   * id, status(r)(e)
+ * listActivities
+   * (none)
+ * getActivity
+   * id
+ * filterActiities
+   * activityType, status, companyId, accountId
+
 ### Properties
 
 * id
@@ -23,22 +40,5 @@ Valid _status_ values are:
  - pending
  - active
  - closed
-
-### Actions
-
- * createActivity
-   * activityType(r), companyId(r)(e), accountId, status(r)(e), notes, dateScheduled
- * updateActivity
-   * id, activityType(r)(e), companyId(r), accountId, status(r)(e), notes, dateScheduled
- * closeActivity
-   * id, notes 
- * statusActivity
-   * id, status(r)(e)
- * ListActivities
-   * (none)
- * GetActivity
-   * id
- * FilterActiities
-   * activityType, status, companyId, accountId
 
 
