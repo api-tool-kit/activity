@@ -1,7 +1,9 @@
-http://localhost:8484/
-http://localhost:8484/list/
-http://localhost:8484/filter?status=active
-http://localhost:8484/ -X POST -d id=q1w2e3r4&status=pending&companyName=MikeCo&email=mikeco@example.com
-http://localhost:8484/q1w2e3r4 -X PUT -d streetAddress=123%20Main&city=Byteville&stateProvince=MD&postalCode=12345&country=USA&telephone=2345678901
-http://localhost:8484/status/q1w2e3r4 -X PATCH -d status=active
-http://localhost:8484/q1w2e3r4 -X DELETE
+# activity requests
+
+http://localhost:8686/
+http://localhost:8686/list/
+http://localhost:8686/filter?status=closed
+http://localhost:8686/ -X POST -d id=q1w2e3r4&status=pending&companyId=2w3e4r5t&activityType=email
+http://localhost:8686/q1w2e3r4 -X PUT -d accountId=3e4r5t6y&dateScheduled=2020-05-01&notes=All%20is%20good.
+http://localhost:8686/status/q1w2e3r4 -X PATCH -d status=active
+http://localhost:8686/close/q1w2e3r4 -X PATCH -d status=closed
